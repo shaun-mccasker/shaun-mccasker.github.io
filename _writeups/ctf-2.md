@@ -5,7 +5,7 @@ date: 2026-10-28
 platform: TryHackMe - OCT 2026
 category: Web Exploitation
 difficulty: Medium
-description: Information/Directory exposure, Insecure Credential Storage, SSRF, SQLI 
+description: Information/Directory exposure, Insecure Credential Storage, BOLA, LFI, CMD Injection
 ---
 
 # Overview
@@ -20,15 +20,15 @@ What is the content of the file /home/ubuntu/user.txt?
 
 # Summary
 
-The assessment began with reconnaissance using Nmap and Gobuster, identifying SSH and an Apache web server, along with potentially interesting directories and files such as /includes, /skins, /info.php and /config.php.
+- The assessment began with reconnaissance using Nmap and Gobuster, identifying SSH and an Apache web server, along with potentially interesting directories and files such as `/includes, /skins, /info.php and /config.php`.
 
-The initial login page exposed a valid username (help@support.thm). Testing revealed no apparent brute-force protection, allowing Hydra to identify the password snoopy. After logging in, the session cookie isITUser was found to contain an MD5 hash of the value false. Replacing it with the MD5 hash of true allowed access to additional functionality.
+- The initial login page exposed a valid `email: help@support.thm`. Testing revealed no apparent brute-force protection, allowing Hydra to identify the password `snoopy`. After logging in, the session `cookie isITUser` was found to contain an `MD5 hash of the value false`. Replacing it with the MD5 hash of true allowed access to additional functionality.
 
-Further investigation uncovered a Broken Object Level Authorization (BOLA) vulnerability in the user API. By changing the user ID in the API URL, it was possible to access another user's information, including the administrator's email address.
+- Further investigation uncovered a Broken Object Level Authorization (BOLA) vulnerability in the user API. By changing the user ID in the API URL, it was possible to access another user's information, including the administrator's `email: specialadmin@support.thm`.
 
-A Local File Inclusion (LFI) vulnerability was then discovered through the dashboard's theme selection parameter. This allowed access to internal PHP files, including config.php, which exposed the administrator's password. After correcting the password format, administrator access was successfully obtained.
+- A Local File Inclusion (LFI) vulnerability was then discovered through the dashboard's theme selection parameter. This allowed access to internal PHP files, including `config.php`, which exposed the administrator's `password:support@110`. After correcting the password format `password: support110`, administrator access was successfully obtained ADMIN FLAG `THM{I_AM_ADMIN999}`
 
-Finally, the administrator dashboard provided a system date functionality that was vulnerable to command injection. By manipulating the sys parameter, it was possible to execute additional system commands and retrieve the contents of /home/ubuntu/user.txt.
+- Finally, the administrator dashboard provided a `system date` functionality that was vulnerable to command injection. By manipulating the sys parameter, it was possible to execute additional system commands and retrieve the contents of `/home/ubuntu/user.txt` FLAG: `THM{GOT_THE_FLAG001}`.
 
 ## Enumeration
 It was already known this CTF would be focusing on session management, broken authentication, file inclusion, command injection and API testing.
@@ -52,6 +52,9 @@ Gobuster Revealed 5 interesting directories that are accessible
 - includes      - Indicates possible local file inclusion
 - info.php   - Revealed webserver info and existance of config.txt
 - skins          -  Useful later on 
+- config.txt    -  Useful later on 
+
+Its worth noting `config.txt` could be loaded but nothing was rendered to the page or in the page source.
 
 ## Credential brute force attack
 When loading the homepage we are presented with a login form. Within the form and below the form it is indicated that there is an account with
@@ -70,16 +73,59 @@ Hyrda succeeded returning credentials `email: help@support.thm password: snoopy`
 Logging in using these credentials we get to the dashboard.
 
 ## Cookie manipulation
-Within the dashboard we can see we can change themes, this allows us to change the colour from red, green, blue and default. We can also see out session is stored in the local storage as a cookie with isITUser and PHPSESSID.
-IsITUser stands out. After a quick reverse hash check it’s found to be an md5 hash of the word false.
-## Initial Access
 
-Explain how you identified the vulnerability and gained access.
+Within the dashboard all we can see a change themes button, this allows us to change the colour from red, green, blue and default. Inspecting local storage revealed our session is stored in as cookies with values, isITUser and PHPSESSID.
+`IsITUser: 68934a3e9455fa72420237eb05902327:false`. Using crackstation it’s found to be an md5 hash of the word false.
 
-## Exploitation
+Changing the cookie value to `IsITUser: b326b5062b2f0e69046810717534cb09:true` revealed an 'IT Admin Panel' and granted access to `/api.php`
 
-Document the technical steps involved in solving the challenge.
+## BOLA 
+`/api.php` reveals an Api Request/Response
 
-## Conclusion
+```
+API REQUEST
+Get /user/3
 
-Summarise what you learned and the techniques involved.
+API RESPONSE
+{
+    "email": "help@support.thm",
+    "2FA": false,
+    "admin": false
+}
+```
+
+This was indicitave of a potential Bola. In the URL I tried `10.49.153.228/user/3` which revealed my current user information.
+Next `10.49.153.228/user/1` revealed user 1 information
+```
+email	"specialadmin@support.thm"
+2FA	false
+admin	true
+```
+
+We now have an admin email/username `specialadmin@support.thm`
+
+## File Inlcusion 
+Going back to the themes. Loading a theme loads changes the url to   
+`10.49.159.168/dashboard.php?skin=red`. When inspecting the `skins` directory from earlier it revealed a directory listing with files `blue.php, default.php, green.php, red.php`.  
+With this information it can be seen changing themes loads the relevent skin file stripping the `.php` from the url.
+Testing for file inclusion i tried `10.49.159.168/dashboard.php?skin=../dashboard`. This loaded the dashboard twice to the UI indicating success. When inspecting the page source we could see internal code which is not usually visible.
+
+With this knowledge I went back to the enumerated directories and began loading them into the interface via file inclusion. When loading `config.txt` as `10.49.159.168/dashboard.php?skin=../config` we can see the source code for this file notably containing `$MASTER_PASSWORD = 'support@110';`.
+
+We now had credentials `username: specialadmin@support.thm password: support@110`
+NOTE: `support110` is the actual password, no idea why.
+
+Attempting to login with these credentials revealed ADMIN FLAG `THM{I_AM_ADMIN999}`
+
+## Command Injection
+
+The only different thing about the admin account is a dropdown to select date or time to display. Intercepting this request in burp suite reveals a parameter called `‘sys’` with value `date`.
+
+This looked like a potential command injection so I inputted who am I which returned the error `‘Only date is allowed’`. The logic was filtering the sys input. A simple check by inputting ‘date; whoami’ revealed it was only checking to see if the date or time value existed returning 
+
+```
+Tue OCT 28 22:56:18 UTC 2026
+www-data
+```
+
+This indicated a successful command injection. The task said the flag is located at `/home/ubuntu/user.txt` therefore I injected `date; cat /home/ubuntu/user.txt` which revealed the final FLAG: `THM{GOT_THE_FLAG001}`

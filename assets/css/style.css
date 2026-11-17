@@ -298,6 +298,35 @@ nav a:hover {
 }
 
 /* =========================
+   FOOTER SOCIAL LINKS
+========================= */
+
+.footer-socials {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.footer-socials a {
+  color: var(--muted);
+  font-size: 12px;
+  transition: color 0.2s ease;
+}
+
+.footer-socials a:hover {
+  color: var(--accent);
+}
+
+/* Mobile */
+
+@media (max-width: 600px) {
+  .footer-socials {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+}
+
+/* =========================
    MOBILE
 ========================= */
 
@@ -849,5 +878,466 @@ main.container {
   .data-table th,
   .data-table td {
     padding: 14px 16px;
+  }
+}
+
+
+
+/* =========================
+   COMPACT ABOUT TIMELINE
+========================= */
+
+.about-timeline {
+  position: relative;
+  margin: 25px 0 50px;
+  padding-left: 25px;
+}
+
+/* Vertical line */
+
+.about-timeline::before {
+  content: "";
+  position: absolute;
+  top: 5px;
+  bottom: 5px;
+  left: 5px;
+  width: 2px;
+  background: var(--border);
+}
+
+/* Timeline item */
+
+.timeline-item {
+  position: relative;
+  margin-bottom: 17px;
+}
+
+/* Timeline marker */
+
+.timeline-item::before {
+  content: "";
+  position: absolute;
+  left: -26px;
+  top: 24px;
+  width: 10px;
+  height: 10px;
+  background: var(--background);
+  border: 2px solid var(--accent);
+  border-radius: 50%;
+  box-shadow: 0 0 0 2px var(--background);
+}
+
+/* Date */
+
+.timeline-date {
+  color: var(--accent);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+/* Card */
+
+.timeline-content {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 11px;
+  padding: 15px 19px;
+  transition: 0.2s ease;
+}
+
+.timeline-content:hover {
+  background: var(--surface-hover);
+  border-color: var(--accent);
+}
+
+/* Location */
+
+.timeline-location {
+  color: var(--muted);
+  font-size: 11px;
+  margin-bottom: 5px;
+}
+
+/* Heading */
+
+.timeline-content h3 {
+  color: var(--text);
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0 0 5px;
+}
+
+/* Description */
+
+.timeline-content p {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Last item */
+
+.timeline-item:last-child {
+  margin-bottom: 0;
+}
+
+/* Mobile */
+
+@media (max-width: 600px) {
+  .about-timeline {
+    padding-left: 23px;
+  }
+
+  .timeline-item::before {
+    left: -24px;
+  }
+
+  .timeline-content {
+    padding: 13px 15px;
+  }
+
+  .timeline-content h3 {
+    font-size: 15px;
+  }
+}
+
+/* =========================
+   SOCIAL
+========================= */
+
+.social-hint {
+    color: #a78bfa;
+    font-size: 14px;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+    padding-right: 50px;
+    padding-top: 30px;
+    text-align: right;
+}
+
+.social-hint span {
+    display: inline-block;
+    font-size: 20px;
+    animation: point 1s ease-in-out infinite alternate;
+}
+
+@keyframes point {
+    from { transform: translateY(-3px); }
+    to   { transform: translateY(3px); }
+}
+
+
+
+/* =========================
+   GLOBAL MOBILE RESPONSIVE
+========================= */
+
+@media (max-width: 600px) {
+
+  /* Global spacing */
+
+  main.container {
+    padding: 30px 18px 0;
+  }
+
+  main.container h1 {
+    font-size: clamp(34px, 9vw, 44px);
+    letter-spacing: -1.5px;
+  }
+
+  /* Navigation */
+
+  .nav-container {
+    flex-direction: column;
+    gap: 12px;
+    padding: 16px 20px;
+  }
+
+  .logo {
+    font-size: 20px;
+  }
+
+  nav {
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px 20px;
+  }
+
+  nav a {
+    font-size: 13px;
+  }
+
+  /* Hero */
+
+  .hero {
+    padding: 65px 0 50px;
+  }
+
+  .hero h1 {
+    font-size: clamp(36px, 10vw, 48px);
+    letter-spacing: -2px;
+  }
+
+  .hero-description {
+    font-size: 15px;
+  }
+
+  /* Homepage */
+
+  .home-title {
+    margin-bottom: 30px;
+  }
+
+  .home-title h1 {
+    font-size: clamp(42px, 11vw, 58px);
+    letter-spacing: -2px;
+    margin-bottom: 25px;
+  }
+
+  .home-title p {
+    font-size: 14px;
+    margin-bottom: 8px;
+  }
+
+  .home-links {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    margin-bottom: 30px;
+  }
+
+  .home-link {
+    padding: 19px;
+  }
+
+  .home-link h3 {
+    font-size: 19px;
+  }
+
+  /* Posts */
+
+  .post-card {
+    padding: 18px;
+  }
+
+  .post-card h3 {
+    font-size: 19px;
+  }
+
+  .post-meta {
+    flex-wrap: wrap;
+  }
+
+  /* Articles */
+
+  .article {
+    padding: 40px 0 60px;
+  }
+
+  .article-header {
+    margin: 35px 0 30px;
+  }
+
+  .article-header h1 {
+    font-size: clamp(30px, 8vw, 40px);
+    letter-spacing: -1px;
+  }
+
+  .article-content {
+    font-size: 15px;
+  }
+
+  /* CV */
+
+  .cv-page {
+    padding-top: 20px;
+  }
+
+  .cv-intro {
+    padding-bottom: 25px;
+    margin-bottom: 30px;
+  }
+
+  .cv-intro h1 {
+    font-size: 38px;
+  }
+
+  .cv-section {
+    margin-bottom: 35px;
+  }
+
+  .cv-item-heading {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 3px;
+  }
+
+  .cv-item-heading span {
+    white-space: normal;
+  }
+
+  /* Timeline */
+
+  .about-timeline {
+    padding-left: 23px;
+    margin: 20px 0 35px;
+  }
+
+  .timeline-item {
+    margin-bottom: 14px;
+  }
+
+  .timeline-item::before {
+    left: -24px;
+  }
+
+  .timeline-content {
+    padding: 13px 15px;
+  }
+
+  .timeline-content h3 {
+    font-size: 15px;
+  }
+
+  .timeline-content p {
+    font-size: 12px;
+  }
+
+  /* Footer */
+
+  .footer-container {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 12px;
+    padding: 25px 20px;
+  }
+
+  .footer-socials {
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px 18px;
+  }
+
+  .footer-socials a {
+    font-size: 12px;
+  }
+
+  /* Writeups */
+
+  .writeup-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .writeup-card {
+    padding: 19px;
+  }
+
+  .writeup-header {
+    margin: 30px 0;
+  }
+
+  .writeup-header h1 {
+    font-size: 34px;
+  }
+
+  /* Tables */
+
+  .table-wrapper {
+    margin: 20px 0;
+  }
+
+  .data-table {
+    font-size: 12px;
+  }
+
+  .data-table th,
+  .data-table td {
+    padding: 12px;
+  }
+
+  /* Social hint */
+
+  .social-hint {
+    padding: 20px 0 0;
+    text-align: center;
+    font-size: 12px;
+  }
+
+  .social-hint span {
+    font-size: 17px;
+  }
+
+  /* Section headings */
+
+  .section-heading {
+    gap: 10px;
+  }
+
+  .section-heading h2 {
+    font-size: 19px;
+  }
+}
+
+
+/* =========================
+   SMALL PHONES
+========================= */
+
+@media (max-width: 380px) {
+
+  nav {
+    gap: 10px 14px;
+  }
+
+  nav a {
+    font-size: 12px;
+  }
+
+  .home-link {
+    padding: 16px;
+  }
+
+  .footer-socials {
+    gap: 10px 14px;
+  }
+
+  .timeline-content {
+    padding: 12px;
+  }
+
+  .post-meta {
+    font-size: 10px;
+  }
+}
+
+
+/* =========================
+   TABLET RESPONSIVE
+========================= */
+
+@media (min-width: 601px) and (max-width: 850px) {
+
+  .container {
+    padding-left: 25px;
+    padding-right: 25px;
+  }
+
+  .home-links,
+  .writeup-grid {
+    gap: 13px;
+  }
+
+  .home-link {
+    padding: 20px;
+  }
+
+  .footer-container {
+    padding-left: 25px;
+    padding-right: 25px;
   }
 }

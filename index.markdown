@@ -21,15 +21,19 @@ layout: page
     <p>Challenges, walkthroughs and technical discoveries.</p>
   </a>
 
+  <a href="/industry-engagement/" class="home-link">
+    <span>03 / Industry Engagement Timeline</span>
+    <h3>Industry Engagement</h3>
+    <p> Timeline of industry events, workshops, CTFs and volunteering.</p>
+  </a>
+
   <a href="/projects/" class="home-link">
-    <span>03 / projects</span>
+    <span>04 / projects</span>
     <h3>Personal Projects→</h3>
     <p>Collection of Personal Projects</p>
   </a>
+</div>
 
-  <a href="/socials/" class="home-link">
-    <span>04 / socials</span>
-    <h3>Socials→</h3>
-    <p>Profiles, platforms and ways to connect </p>
-  </a>
+<div class="social-hint">
+    psst... I'm over here <span>↴</span>
 </div>
