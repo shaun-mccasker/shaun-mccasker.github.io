@@ -1,0 +1,40 @@
+
+<section class="hero">
+  <span class="eyebrow">WELCOME TO MY BLOG</span>
+
+  <h1>
+    Thoughts, ideas &<br>
+    <span class="accent">things I've built.</span>
+  </h1>
+
+  <p class="hero-description">
+    A collection of notes, projects, experiments
+    and things I've learned along the way.
+  </p>
+</section>
+
+<section class="posts-section">
+  <div class="section-heading">
+    <h2>Latest articles</h2>
+    <span>RECENT WRITING</span>
+  </div>
+
+  <div class="post-list">
+    {% for post in site.posts %}
+      <a href="{{ post.url | relative_url }}" class="post-card">
+
+        <div class="post-meta">
+          <span>{{ post.category | default: "ARTICLE" }}</span>
+          <time>{{ post.date | date: "%b %d, %Y" }}</time>
+        </div>
+
+        <h3>{{ post.title }}</h3>
+
+        <p>{{ post.excerpt | strip_html | truncate: 150 }}</p>
+
+        <span class="read-more">Read article →</span>
+
+      </a>
+    {% endfor %}
+  </div>
+</section>

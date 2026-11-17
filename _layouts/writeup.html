@@ -1,0 +1,29 @@
+---
+layout: default
+---
+
+<article class="writeup">
+
+  <a href="{{ '/ctf-writeups/' | relative_url }}" class="back-link">
+    ← Back to CTF Writeups
+  </a>
+
+  <header class="writeup-header">
+
+    <span class="eyebrow">{{ page.platform }}</span>
+
+    <h1>{{ page.title }}</h1>
+
+    <div class="writeup-meta">
+      <span>{{ page.category }}</span>
+      <span>{{ page.difficulty }}</span>
+      <span>{{ page.date | date: "%B %d, %Y" }}</span>
+    </div>
+
+  </header>
+
+  <div class="article-content">
+    {{ content }}
+  </div>
+
+</article>
