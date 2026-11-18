@@ -50,11 +50,11 @@ gobuster dir -u 10.49.153.228 -w /usr/share/wordlists/dirb/directory-list-2.3-me
 ```
 Gobuster Revealed 5 interesting directories that are accessible 
 - includes      - Indicates possible local file inclusion
-- info.php   - Revealed webserver info and existance of config.txt
+- info.php   - Revealed webserver info and existence of config.txt
 - skins          -  Useful later on 
 - config.txt    -  Useful later on 
 
-Its worth noting `config.txt` could be loaded but nothing was rendered to the page or in the page source.
+It's worth noting `config.txt` could be loaded but nothing was rendered to the page or in the page source.
 
 ## Credential brute force attack
 When loading the homepage we are presented with a login form. Within the form and below the form it is indicated that there is an account with
@@ -62,13 +62,13 @@ email/username `help@support.thm`.
 
 Trying some login attempts we can see the error renders is `Invalid Credentials`. Notably it did not disclose whether the username was valid/invalid.
 
-Using burp suite I automated some attacks and received `200 OK` error `Invalid Credentials`. It's worth noting that repeating this attack did not return a 429 indicating no rate limiting. Knowing this a hyrda payload was created.
+Using burp suite I automated some attacks and received `200 OK` error `Invalid Credentials`. It's worth noting that repeating this attack did not return a 429 indicating no rate limiting. Knowing this a Hydra payload was created.
 
 ```
 hydra -l help@support.thm -P /usr/share/wordlists/rockyou.txt \
 10.49.154.66 http-post-form '/:email=^USER^&password=^PASS^:Invalid credentials' -f -V
 ```
-Hyrda succeeded returning credentials `email: help@support.thm password: snoopy`
+Hydra succeeded returning credentials `email: help@support.thm password: snoopy`
 
 Logging in using these credentials we get to the dashboard.
 
@@ -94,7 +94,7 @@ API RESPONSE
 }
 ```
 
-This was indicitave of a potential Bola. In the URL I tried `10.49.153.228/user/3` which revealed my current user information.
+This was indicative of a potential Bola. In the URL I tried `10.49.153.228/user/3` which revealed my current user information.
 Next `10.49.153.228/user/1` revealed user 1 information
 ```
 email	"specialadmin@support.thm"
@@ -104,11 +104,11 @@ admin	true
 
 We now have an admin email/username `specialadmin@support.thm`
 
-## File Inlcusion 
+## File Inclusion 
 Going back to the themes. Loading a theme loads changes the url to   
 `10.49.159.168/dashboard.php?skin=red`. When inspecting the `skins` directory from earlier it revealed a directory listing with files `blue.php, default.php, green.php, red.php`.  
-With this information it can be seen changing themes loads the relevent skin file stripping the `.php` from the url.
-Testing for file inclusion i tried `10.49.159.168/dashboard.php?skin=../dashboard`. This loaded the dashboard twice to the UI indicating success. When inspecting the page source we could see internal code which is not usually visible.
+With this information it can be seen changing themes loads the relevant skin file stripping the `.php` from the url.
+Testing for file inclusion I tried `10.49.159.168/dashboard.php?skin=../dashboard`. This loaded the dashboard twice to the UI indicating success. When inspecting the page source we could see internal code which is not usually visible.
 
 With this knowledge I went back to the enumerated directories and began loading them into the interface via file inclusion. When loading `config.txt` as `10.49.159.168/dashboard.php?skin=../config` we can see the source code for this file notably containing `$MASTER_PASSWORD = 'support@110';`.
 
