@@ -3,10 +3,10 @@ layout: page
 ---
 <div class="home-title">
     <h1>Welcome</h1>
-    <p>Hi I'm Shaun, Im passionate about all things cyber security.  </p>
+    <p>Hi I'm Shaun, I'm passionate about all things cybersecurity.  </p>
     <p>Currently focusing my study towards <strong>Penetration Testing and AI Security.</strong></p>
-    <p>Activley Participating and Volunteering in CTFs</p>
-    <p>AISA Member, QUT Alumni, Tafe Student</p>
+    <p>Actively Participating and Volunteering in CTFs</p>
+    <p>AISA Member, QUT Alumni, TAFE Student</p>
 </div>
 <div class="home-links">
   <a href="/cv/" class="home-link">
