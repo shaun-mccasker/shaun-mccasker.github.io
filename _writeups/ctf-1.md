@@ -23,7 +23,7 @@ Can you gain an initial foothold, escalate your access, and ultimately log in as
 # Summary 
 - Directory enumeration found webserver misconfiguration exposing `/sitemap.xml` and other sensitive directories. 
 - Improper access controls allowed access to `/mail/mail.log` containing credentials used for deployment. This included HR’s `username: hr` and a note stating HR’s password is in config.txt. 
-- Exposed API documentation at `/api.php` identified method for fetching CV’s `/file.php?cv=<URL>` which is vulnerable to SSRF. SSRF via `/file.php?cv=file://config.php` gave access to config.php revealing HR’s `password: hrpassword123`. 
+- Exposed API documentation at `/API.php` identified method for fetching CV’s `/file.php?cv=<URL>` which is vulnerable to SSRF. SSRF via `/file.php?cv=file://config.php` gave access to config.php revealing HR’s `password: hrpassword123`. 
 - Login using HR `username:hr password:hrpassword123` gave access to the web portal revealing `USER FLAG THM{LOGGED_IN_USER}`. 
 - User form to search for recruit applications found vulnerable to SQL Injection. Testing revealed SQL query must be similar to, 
 `SELECT * FROM TABLE WHERE username LIKE ‘%input%`. Using SQL injection UNION attack database name `(recruit_db)`, table names `(candidates, users)` were identified. Users table contained columns `username, password`. Final SQL query revealed admin `username:admin and password:admin@001admin`
@@ -54,7 +54,7 @@ Gobuster Revealed 5 interesting directories that are accessible
 - phpmyadmin    - Indicates mysql database
 - sitemap.xml   - Reveals internal directories
 - mail          - Possible exposed mail 
-- api.php       - Api functionality 
+- API.php       - API functionality 
 
 Investigating sitemap.xml revealed 
 
@@ -80,15 +80,15 @@ As discussed during deployment:
 
 FOUND HR CREDENTIALS `username: hr` AND `password is stored within 'config.txt'`.  
 
-Investigating /api revealed how to fetch candidate CV's via the api 
+Investigating /API revealed how to fetch candidate CV's via the API 
 ```
 You can fetch a candidate CV using the following endpoint:  /file.php?cv=<URL>
 ```
 ## SSRF
 
 Having the whole url as the parameter reveals a potential SSRF.  
-First i tried `/file.php?cv=config.php.` error `only local files are allowed`.
-This meant there is some form of handling preventing unkown files url's. Since the server was identified as Apache it was likley the LAMP stack was being used, indicating PHP. I initially tried some file traversal to no luck.  
+First I tried `/file.php?cv=config.php.` error `only local files are allowed`.
+This meant there is some form of handling preventing unknown files url's. Since the server was identified as Apache it was likely the LAMP stack was being used, indicating PHP. I initially tried some file traversal to no luck.  
 After some research I learnt that “file://" is the default wrapper used with PHP and represents the local filesystem. When a relative path is specified (a path which does not begin with /, \, \\, or a Windows drive letter) the path provided will be applied against the current working directory.” which I found in the PHP documentation. 
 So I tried `http://10.49.145.159//file.php?cv=file://config.php`
 ```
@@ -212,7 +212,7 @@ I performed:
 - Get db name == recruit_db `1234' OR 0 UNION SELECT 1,2,3,database();-- `
 - Get table names == candidates,users `1234%' OR 0 UNION SELECT 1,2,3,group_concat(table_name) FROM information_schema.tables WHERE table_schema = 'recruit_db';-- `
 - Get important column names of users == username,password`1234' OR 0 UNION SELECT 1,2,3,group_concat(column_name) FROM information_schema.columns WHERE table_name = 'users';-- `
-- Finnally I Get username:password from users `1234' OR 0 UNION SELECT 1,2,3,group_concat(username,':',password SEPARATOR '<br>') FROM users;-- `
+- Finally I Get username:password from users `1234' OR 0 UNION SELECT 1,2,3,group_concat(username,':',password SEPARATOR '<br>') FROM users;-- `
 
 Revealing the admin `username:admin` password`admin@001admin`
 
