@@ -15,6 +15,12 @@ permalink: /cv/
   </div>
 
   <section class="cv-section">
+    <h2>What makes me different from other candidates?</h2>
+    <p>
+      I'm driven by my passions, by what brings me joy, not by the outcome. <br>
+      Im curious by nature, inspired to learn, driven to guide others. <br>
+      I learn and adapt quickly, because when my passions meets purpose, that is where I thrive.
+    </p>
     <h2>About Me</h2>
     <p>
       Completed Bachelor of IT, majoring in Computer Science, currently
@@ -138,6 +144,21 @@ permalink: /cv/
     </div>
 
     <div class="cv-skill-group">
+      <h3>WebAPP Penetration Testing</h3>
+      <div class="skill-tags">
+        <span>Burpsuite</span>
+        <span>Metasploit</span>
+        <span>CSRF/SSRF</span>
+        <span>IDOR</span>
+        <span>SQLInjection</span>
+        <span>XSS</span>
+        <span>Session Management/Auth</span>
+        <span>LFI/RFI</span>
+        <span>Command Injection</span>
+      </div>
+    </div>
+
+    <div class="cv-skill-group">
       <h3>Programming Languages</h3>
       <div class="skill-tags">
         <span>Python</span>
@@ -180,5 +201,17 @@ permalink: /cv/
       <p>Sushi Train, Queensland</p>
     </div>
   </section>
+
+  <section class="cv-section">
+    <h2>References</h2>
+    <p>
+      Please view my Resume/CV pdf document<br>
+      Contact me on linked in otherwise (Link is bottom right of footer)
+    </p> 
+
+  </section>
+  <div class="social-hint">
+    psst... I'm over here <span>↴</span>
+  </div>
 
 </div>
