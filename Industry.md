@@ -7,6 +7,36 @@ permalink: /industry-engagement/
 <div class="about-timeline">
 
   <div class="timeline-item">
+    <div class="timeline-date">NOV 25 2026</div>
+    <div class="timeline-content">
+      <div class="timeline-card-body">
+        <img class="timeline-image"
+             src="{{ '/assets/img/aisa.png' | relative_url }}"
+             alt="AISA">
+        <div class="timeline-details">
+          <div class="timeline-location">📍 Online</div>
+          <h3>AISA/SentinalOne - When Attackers Use AI: How defenders can respond</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="timeline-item">
+    <div class="timeline-date">NOV 24 2026</div>
+    <div class="timeline-content">
+      <div class="timeline-card-body">
+        <img class="timeline-image"
+             src="{{ '/assets/img/aisa.png' | relative_url }}"
+             alt="AISA">
+        <div class="timeline-details">
+          <div class="timeline-location">📍 Brisbane, QLD</div>
+          <h3>AISA/F5 - Defending Against Frontier AI + CTF</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="timeline-item">
     <div class="timeline-date">NOV 12 2026</div>
     <div class="timeline-content">
       <div class="timeline-card-body">
@@ -30,7 +60,7 @@ permalink: /industry-engagement/
              src="{{ '/assets/img/aisa.png' | relative_url }}"
              alt="AISA">
         <div class="timeline-details">
-          <div class="timeline-location">📍 Brisbane,Q LD</div>
+          <div class="timeline-location">📍 Brisbane, QLD</div>
           <h3>AISA - Post Quantum Cryptography</h3>
         </div>
       </div>

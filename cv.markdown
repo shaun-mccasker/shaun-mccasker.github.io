@@ -65,7 +65,7 @@ permalink: /cv/
         <h3>Industry Engagement</h3>
         <span>2026 – Present</span>
       </div>
-      <p>QUT GRC, BCSM and AISA cyber security meetups</p>
+      <p>BCSM and AISA cyber security meetups</p>
     </div>
 
     <div class="cv-item">
@@ -86,7 +86,6 @@ permalink: /cv/
         Networking Basics, Introduction to Cybersecurity and
         Linux Unhatched certifications
       </p>
-      <p>In Progress: Ethical Hacking</p>
     </div>
 
   </section>
